@@ -38,7 +38,7 @@ NSString * const ID = @"cycleCell";
 @property (nonatomic, weak) NSTimer *timer;
 @property (nonatomic, assign) NSInteger totalItemsCount;
 @property (nonatomic, weak) UIControl *pageControl;
-@property (nonatomic, weak) UIImageView *backgroundView;
+@property (nonatomic, strong) UIImageView *backgroundView;
 
 @end
 
@@ -76,13 +76,7 @@ NSString * const ID = @"cycleCell";
     _pageControlDotSize = CGSizeMake(10, 10);
     _pageControlStyle = SDCycleScrollViewPageContolStyleAnimated;
     
-    UIImageView *backgroundView = [[UIImageView alloc]init];
-    backgroundView.contentMode  = UIViewContentModeScaleAspectFill;
-    [self addSubview:backgroundView];
-    _backgroundView = backgroundView;
-    
     self.backgroundColor = [UIColor lightGrayColor];
-    
 }
 
 + (instancetype)cycleScrollViewWithFrame:(CGRect)frame imagesGroup:(NSArray *)imagesGroup
@@ -116,11 +110,21 @@ NSString * const ID = @"cycleCell";
     [mainView registerClass:[SDCollectionViewCell class] forCellWithReuseIdentifier:ID];
     mainView.dataSource = self;
     mainView.delegate = self;
+    mainView.backgroundView = self.backgroundView;
     [self addSubview:mainView];
     _mainView = mainView;
 }
 
 #pragma mark - properties
+
+- (UIImageView *)backgroundView
+{
+    if (!_backgroundView) {
+        _backgroundView  = [[UIImageView alloc]init];
+        _backgroundView.contentMode  = UIViewContentModeScaleAspectFill;
+    }
+    return _backgroundView;
+}
 
 - (void)setBackgroundImage:(UIImage *)backgroundImage
 {
@@ -336,8 +340,6 @@ NSString * const ID = @"cycleCell";
     [super layoutSubviews];
     
     _flowLayout.itemSize = self.frame.size;
-    
-    _backgroundView.frame = self.bounds;
     
     _mainView.frame = self.bounds;
     if (_mainView.contentOffset.x == 0 &&  _totalItemsCount) {
