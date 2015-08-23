@@ -100,6 +100,8 @@ typedef enum {
 @property (nonatomic, strong) UIColor *titleLabelBackgroundColor;
 @property (nonatomic, assign) CGFloat titleLabelHeight;
 
+// 背景图片
+@property (nonatomic, strong) UIImage *backgroundImage;
 
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>  清除缓存接口
