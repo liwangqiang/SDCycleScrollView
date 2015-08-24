@@ -205,9 +205,10 @@ NSString * const ID = @"cycleCell";
     } else {
         self.mainView.scrollEnabled = NO;
     }
-    
     [self setupPageControl];
     [self.mainView reloadData];
+    //重新设置轮播图位置
+    [self.mainView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:_totalItemsCount * 0.5 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
 }
 
 - (void)setImageURLStringsGroup:(NSArray *)imageURLStringsGroup
@@ -467,6 +468,4 @@ NSString * const ID = @"cycleCell";
         [self setupTimer];
     }
 }
-
-
 @end
